@@ -1,9 +1,8 @@
 <template>
   <b-navbar>
     <b-navbar-nav>
-      <b-nav-item to="/home">Home</b-nav-item>
+      <b-nav-item to="/upload">Upload</b-nav-item>
       <b-nav-item to="/games">Games</b-nav-item>
-      <b-nav-item to="/leaderboard">Leaderboard</b-nav-item>
     </b-navbar-nav>
   </b-navbar>
 </template>

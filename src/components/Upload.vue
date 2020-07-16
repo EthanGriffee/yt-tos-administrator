@@ -173,23 +173,22 @@ export default {
         console.log(this.newgame);
       },
     async onSubmit() {
-
-        console.log(this.newgame);
         const response = await fetch(`https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${this.newgame.game.youtubeID}&key=${process.env.VUE_APP_YT_API_KEY}`, {
             method: 'GET',
             headers: {
                 'content-type': 'application/json'
             }})
         const data = await response.json()
-        console.log(data);
-        if(data == null || data.items.length == 0) this.inserted = 2;
+        if(data == null || data.items.length == 0) { this.inserted = 2; return;}
         this.newgame.game.videoTitle = data.items[0].snippet.title;
+        console.log(this.newgame);
         const response2 = await fetch(`${process.env.VUE_APP_API_URL}games`, {
                 method: 'POST',
                 body: JSON.stringify(this.newgame),
                 headers: {
                     'content-type': 'application/json'
                 }})
+        console.log("CHEETO");
         const data2 = await response2.json();
         this.inserted = data2 == null ? 2 : 1;
     }

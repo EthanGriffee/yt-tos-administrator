@@ -2,7 +2,6 @@ import Vue from 'vue'
 import App from './App.vue'
 import Game from './components/Game.vue'
 import GameList from './components/GameList.vue'
-import Home from './components/Home.vue'
 import Upload from './components/Upload.vue'
 import VueRouter from 'vue-router'
 import PlayerProfile from './components/PlayerProfile.vue'
@@ -32,19 +31,10 @@ const router = new VueRouter({
   routes: [
     { 
       path:"*", 
-      redirect: { name: 'home' }
-    },
-    {
-      path:"/home",
-      name:"home",
-      component: Home,
-      meta: {
-        title: () => {return 'Home - GeneralPeanut'}
-      }
+      redirect: { name: 'upload' }
     },
     {
       path:"/games/:id",
-      name: "gameItem",
       component: Game,
       meta: {
         title: () => {return 'Game - GeneralPeanut'}
@@ -59,6 +49,7 @@ const router = new VueRouter({
     },
     {
       path:"/upload",
+      name:'upload',
       component: Upload,
       meta: {
         title: () => {return 'Upload - GeneralPeanut'}
