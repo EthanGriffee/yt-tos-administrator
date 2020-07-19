@@ -4,7 +4,7 @@
       <b-card-group columns>
         <b-card v-bind:style="colorCard(game)" v-for="game in games" :key="game.id">
 
-          <font-awesome-icon @click="deleteGame(game)" icon="times" style="color:red"/>
+          <font-awesome-icon @click="deleteGame(game)" icon="times" style="color:white"/>
             <b-card-text @click="goToGame(game.id)">
               Click : 
               {{game.videoTitle}}

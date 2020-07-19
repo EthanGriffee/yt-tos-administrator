@@ -18,7 +18,7 @@
                 <input type="radio" v-model="game.lvp" :value="game.players[x - 1].player">
             </div>
             <input class="mr-2" v-model="game.players[x - 1].player.name" placeholder="Player Username">
-            <v-select select :clearable="false" v-model="game.players[x - 1].role.name" :options="possibleroles"/>
+            <v-select select :clearable="false" v-model="roles[x - 1]" :options="possibleroles"/>
         </div>
 
         <div class=row>
@@ -56,9 +56,12 @@ export default {
   name: 'game',
   data() {
     return {
-        gameId:this.$route.params.id , 
+        gameId:this.$route.params.id ,
+        roles: [],
         game: {},
-        inserted: 0
+        inserted: 0,
+        possibleroles: [ "Jailor", "Sheriff", "Investigator", "Lookout", "Spy", "Vigilante", "Veteran", "Bodyguard", "Doctor", "Escort", "Mayor", "Medium", "Retributionist", "Transporter", "Godfather",  "Mafioso", "Disguiser", 
+            "Forger",  "Framer",  "Janitor",  "Blackmailer",  "Consigliere",  "Consort",  "Jester",  "Witch",  "Executioner",  "Arsonist",  "Werewolf",  "Serial Killer"]
     }
   },
   created () {
@@ -81,11 +84,17 @@ export default {
             const response2 = await fetch(`${process.env.VUE_APP_API_URL}games/${this.gameId}`)
             this.game = await response2.json();
             this.game.players = data;
+            console.log(this.roles);
+            this.roles = this.game.players.map(player => player.role.name);
+            console.log(this.roles);
         } catch (error) {
             console.error(error)
         }
     },
     async onSubmit() {
+        for (var x = 0; x < 15; x++) {
+          this.game.players[x].role.name = this.roles[x];
+        }
         const response = await fetch(`https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${this.game.youtubeID}&key=${process.env.VUE_APP_YT_API_KEY}`, {
             method: 'GET',
             headers: {
@@ -102,35 +111,40 @@ export default {
                 headers: {
                     'content-type': 'application/json'
                 }})
-        console.log("CHEETO");
         const data2 = await response2.json();
         console.log(data2);
         this.inserted = data2 == -1 ? 2 : 1;
+    },
+    updateRoleName(newRole, player) {
+      this.$set(player.role, 'name', newRole);
     }
   }
 }
 </script>
 
-<style scoped>
-.all {
-    background-image: url(../assets/tos-background.png);
-    background-position: center;
-    position: fixed;
+
+<style lang="scss">
+    $vs-colors: (
+            lightest: #DCDCDC,
+            light: #D3D3D3,
+            dark: #C0C0C0,
+            darkest: #A9A9A9,
+    );
+
+    @import "vue-select/src/scss/vue-select.scss";
+
+  .vs__dropdown-menu {
+    background: #dfe5fb;
+    border: none;
+    color: #394066;
+    text-transform: lowercase;
+    font-variant: small-caps;
+  }
+
+    input[type="radio"] {
+    margin-top: -1px;
     height: 100%;
-    width:  100%;
-}
-.white {
-    color: #fff;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0 0 0 0;
-}
-iframe {
-  width:100%; height:100%;
-}
-.black-border {
-  border: 1px solid black;
-}
+    vertical-align: middle;
+    }
+
 </style>
