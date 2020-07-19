@@ -182,14 +182,15 @@ export default {
         if(data == null || data.items.length == 0) { this.inserted = 2; return;}
         this.newgame.game.videoTitle = data.items[0].snippet.title;
         console.log(this.newgame);
+        console.log(`${process.env.VUE_APP_API_URL}games`);
         const response2 = await fetch(`${process.env.VUE_APP_API_URL}games`, {
                 method: 'POST',
                 body: JSON.stringify(this.newgame),
                 headers: {
                     'content-type': 'application/json'
                 }})
-        console.log("CHEETO");
         const data2 = await response2.json();
+        console.log(data2);
         this.inserted = data2 == null ? 2 : 1;
     }
   }

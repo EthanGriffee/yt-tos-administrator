@@ -2,8 +2,11 @@
   <div>
     <b-container class=mt-2>
       <b-card-group columns>
-        <b-card @click="goToGame(game.id)" v-bind:style="colorCard(game)" v-for="game in games" :key="game.id">
-            <b-card-text>
+        <b-card v-bind:style="colorCard(game)" v-for="game in games" :key="game.id">
+
+          <font-awesome-icon @click="deleteGame(game)" icon="times" style="color:red"/>
+            <b-card-text @click="goToGame(game.id)">
+              Click : 
               {{game.videoTitle}}
             </b-card-text>
             <template v-slot:footer>
@@ -59,6 +62,14 @@ export default {
         } catch (error) {
             console.error(error)
         }
+    },
+    async deleteGame(game) {
+        await fetch(`${process.env.VUE_APP_API_URL}games/${game.id}`, {
+        method: 'DELETE',
+        headers: {
+            'content-type': 'application/json'
+        }})
+        this.games.splice(this.games.indexOf(game), 1);
     },
     colorCard(game) {
       switch(game.winner) {

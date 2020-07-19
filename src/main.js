@@ -4,7 +4,6 @@ import Game from './components/Game.vue'
 import GameList from './components/GameList.vue'
 import Upload from './components/Upload.vue'
 import VueRouter from 'vue-router'
-import PlayerProfile from './components/PlayerProfile.vue'
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
@@ -12,11 +11,11 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import "bootstrap";
 
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faPoo, faTrophy, faAward, faTimes, faSearch} from '@fortawesome/free-solid-svg-icons'
+import { faPoo, faTrophy, faAward, faTimes} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 
-library.add(faPoo, faTrophy, faAward, faTimes, faSearch)
+library.add(faPoo, faTrophy, faAward, faTimes)
 
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
@@ -36,6 +35,7 @@ const router = new VueRouter({
     {
       path:"/games/:id",
       component: Game,
+      name: "gameItem",
       meta: {
         title: () => {return 'Game - GeneralPeanut'}
       }
@@ -53,14 +53,6 @@ const router = new VueRouter({
       component: Upload,
       meta: {
         title: () => {return 'Upload - GeneralPeanut'}
-      }
-    },
-    {
-      path: "/players/:name",
-      component: PlayerProfile,
-      name: "playerProfile",
-      meta: {
-        title: () => {return 'Player - GeneralPeanut'}
       }
     }
   ]
