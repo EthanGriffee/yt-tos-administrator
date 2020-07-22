@@ -28,6 +28,7 @@
                     ref="pictureInput"
                     @change="onChanged"
                     :removable="false"
+                    crop="false"
                     accept="image/png"
                     buttonClass="ui button primary"
                     :customStrings="{
@@ -128,6 +129,9 @@ export default {
         if (partsArray.length == 7 &&  partsArray[1] == "Legacy") {
             this.legacy = true;
             curr_check= 2;
+        }
+        else {
+            this.legacy = false;
         }
         if (partsArray.length - curr_check == 5) {
             this.newgame.mvp =  partsArray[curr_check];
